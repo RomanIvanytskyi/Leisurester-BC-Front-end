@@ -1,100 +1,69 @@
-import React, { useState } from 'react';
-import {
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators,
-  CarouselCaption,
-  Button
-} from 'reactstrap';
+// import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { getRandom } from "../../api/api";
+import { Carousel } from "react-bootstrap";
+import { Button } from "reactstrap";
 
-const items = [
-  {
-    id: 1,
-    altText: 'Football',
-    caption: 'Football',
-    src:'https://ic.wampi.ru/2021/05/30/Leisure.jpg',
-    btn:<Button outline color="secondary">More</Button>
-  },
-  {
-    
-    id: 2,
-    altText: 'Monopoly',
-    caption: 'Monopoly',
-    src:'https://ic.wampi.ru/2021/05/30/Leisure.jpg',
-    btn:<Button outline color="secondary">More</Button>
-  },
-  {
-    id: 3,
-    altText: 'Alias',
-    caption: 'Alias',
-    src:'https://ic.wampi.ru/2021/05/30/Leisure.jpg',
-    btn:<Button outline color="secondary">More</Button>
+const Carouselka = () => {
+  //eslint-disable-next-line
+  const [refresh, setRefresh] = useState(0);
+  const [random, setRandom] = useState([]);
+  const [restart, setRestart] = useState(" ")
+  useEffect(() => {
+    getRandom().then((response) => {
+      response.data.data.forEach((item) => {});
+      console.log(response.data.data);
+      setRandom(
+        response.data.data.map((item) => {
+          return {
+            name: item.name,
+            category: item.category,
+            type: item.type,
+            description: item.description,
+            postId: item.postId,
+            file: item.file
+          };
+        })
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    getRandom().then((res) => {
+      getRandom(res.data);
+    });
+  }, [restart]);
+  
+  const restartpage = (id) => {
+    getRandom().then((response) => {
+      console.log(response)
+      setRestart(response.data)
+    })
   }
-];
-
-const Carouselka = (props) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
-
-  const next = () => {
-    if (animating) return;
-    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
-    setActiveIndex(nextIndex);
-  }
-
-  const previous = () => {
-    if (animating) return;
-    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
-    setActiveIndex(nextIndex);
-  }
-
-  const goToIndex = (newIndex) => {
-    if (animating) return;
-    setActiveIndex(newIndex);
-  }
-
-  const slides = items.map((item) => {
-    return (
-      <CarouselItem
-        className="custom-tag"
-        img={item.src}
-        btn={item.btn}
-        tag="div"
-        key={item.id}
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-      >
-        <btn src={item.btn} alt={item.altText}/>
-        <img src={item.src} alt={item.altText} />
-        <CarouselCaption className="text-danger" captionText={item.btn} captionHeader={item.caption}  img={item.img} btn={item.btn}/>
-      </CarouselItem>
-    );
-  });
 
   return (
     <div>
-      <style>
-        {
-          `.custom-tag {
-              max-width: 100%;
-              height: 500px;
-              background: black;
-            }`
-        }
-      </style>
-      <Carousel
-        activeIndex={activeIndex}
-        next={next}
-        previous={previous}
-      >
-        <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-        {slides}
-        <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
-        <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+      <Carousel variant="dark">
+        {random.map((q) => {
+          return (
+            <Carousel.Item key={q.postId}>
+              <img
+                alt=""
+                className="d-block w-100"
+                src={q.file}
+              ></img>
+              <Carousel.Caption>
+                <div>
+                  <h3>{q.name}</h3>
+                  <div>{q.type}</div>
+                </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+          );
+        })}
       </Carousel>
+      <Button onClick = {(e)=>restartpage}>Random</Button>
     </div>
   );
-}
-
+};
 export default Carouselka;

@@ -3,7 +3,7 @@ import Carouselka from "../../Components/Carousel/Carousel"
 
 const Home = () => {
   return <div>
-    <RandomButton />
+
     <Carouselka />
   </div>
 }

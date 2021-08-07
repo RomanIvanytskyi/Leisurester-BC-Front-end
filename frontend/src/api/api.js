@@ -18,7 +18,6 @@ export const postData = (data) => {
 };
 
 export const register = (data) => {
-  console.log("kjewlfjklrh");
   return axios.post("http://localhost:3000/register", {
     firstname: data.firstname,
     lastname: data.lastname,
@@ -59,5 +58,10 @@ export const proposition = (data) => {
 
 export const getProposition = () => {
   return axios.get("http://localhost:3000/getProposition", {
+  });
+};
+
+export const getRandom = () => {
+  return axios.get("http://localhost:3000/getRandom", {
   });
 };
