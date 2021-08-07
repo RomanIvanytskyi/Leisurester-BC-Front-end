@@ -8,7 +8,7 @@ const NewLeisure = (props) => {
     console.log("val");
     formik.values = {
       name: "",
-      category: "",
+      category: "inHome",
       type: "sport",
       persons: "",
       description: "",
@@ -19,22 +19,23 @@ const NewLeisure = (props) => {
   const formik = useFormik({
     initialValues: {
       name: "",
-      category: "",
+      category: "inHome",
       type: "sport",
       persons: "",
       description: "",
       file: "",
     },
     onSubmit: (values, { resetForm }) => {
-      debugger;
+      
       console.log("val");
       postData(values);
       console.log("val");
-      resetValues();
+      formik.resetForm();
     },
   });
+  
   return (
-    <Form onSubmitt={formik.resetForm}>
+    <Form onSubmit={formik.handleSubmit}>
       <FormGroup>
         <Label for="name">Name of Leisure</Label>
         <Input

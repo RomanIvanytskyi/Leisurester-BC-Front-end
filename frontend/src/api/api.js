@@ -39,10 +39,11 @@ export const login =(data) =>{
 };
 
 export const Delete =(data)=>{
-    
-    return axios.delete("http://localhost:3000/postData",{
-    postId: data.postId
-});
+    console.log(data)
+    return axios.post("http://localhost:3000/deleteData",{
+      id: data
+}
+);
 };
 
 export const proposition = (data) => {

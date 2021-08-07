@@ -8,25 +8,33 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { getData } from "../../api/api";
+import { getData, Delete } from "../../api/api";
 
 const AdminGlossary = () => {
-  debugger
+  
   const [data, setData] = useState([]);
+  const [lastDeleted, setLastDeleted] = useState("")
+
   useEffect(() => {
     getData().then((res) => {
       setData(res.data);
     });
   }, []);
 
-  // const [postId, setpostId] = useState([]);
 
-  // const postID = () => {
-  //   Delete().then((res) => {
-  //     setpostId(res.postId);
-  //   });
-  // };
-
+  useEffect(() => {
+    getData().then((res) => {
+      setData(res.data);
+    });
+  }, [lastDeleted]);
+  
+  const deleteItem = (id) => {
+    Delete(id).then((response) => {
+      console.log(response)
+      setLastDeleted(response.data)
+    })
+  }
+  
   return (
     <div>
       <Row
@@ -54,7 +62,7 @@ const AdminGlossary = () => {
                 <Button type="button" className="btn btn-dark btn-lg btn-block">
                   More
                 </Button>
-                <Button type="delete" className="btn btn-dark btn-lg btn-block">
+                <Button type="submit" onClick={(e) => deleteItem(post._id)} className="btn btn-dark btn-lg btn-block">
                   Delete
                 </Button>
     
