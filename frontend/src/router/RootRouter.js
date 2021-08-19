@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Home from "../Pages/Home/Home";
 import Glossary from "../Pages/Glossary/Glossary";
@@ -14,7 +14,11 @@ import AdminLayout from "../Components/Layouts/AdminLayout";
 import NewLeisure from "../Pages/Glossary/NewLeisure";
 import Leisure from "../Pages/Leisure/OneLeisure";
 import Proposition from "../Pages/UserProposition/UserProposition";
+import OneLeisure from "../Pages/Leisure/OneLeisure";
+import LeisureEdit from "../Pages/Leisure/LeisureEdit";
 import AdmProposition from "../Pages/UserProposition/AdminPropositions";
+import { meAPI } from "../api/api";
+
 const authRouters = [
   {
     path: paths.home,
@@ -78,6 +82,11 @@ const AppRouters = [
     Component: Proposition,
     exact: true,
   },
+  {
+    path: paths.oneLeisure,
+    Component: OneLeisure,
+    exact: false,
+  },
 ];
 const AdminRouters = [
   {
@@ -106,56 +115,110 @@ const AdminRouters = [
     exact: true,
   },
   {
-    path:paths.adminproposition,
+    path: paths.adminproposition,
     Component: AdmProposition,
     exact: true,
   },
   {
-    path:paths.newLeisure,
+    path: paths.newLeisure,
     Component: NewLeisure,
     exact: true,
-  }
+  },
+  {
+    path: paths.oneLeisure,
+    Component: OneLeisure,
+    exact: false,
+  },
+  {
+    path: paths.LeisureEdit,
+    Component: LeisureEdit,
+    exact: false,
+  },
 ];
 
 const RootRouter = (props) => {
   const [loggedIn, setloggedIn] = useState();
   const [isAdmin, setIsAdmin] = useState();
+  const [user, setUser] = useState(null);
 
-  const admin = () => {
-    setIsAdmin(true);
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    let role = localStorage.getItem("role");
+    if (role === "admin") {
+      setIsAdmin(true);
+      console.log("admin");
+    }
+    if (token && token !== "undefined") {
+      meAPI(token).then((res) => {
+        setloggedIn(true);
+      });
+    } else {
+      setUser(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const me = () => {
+    let token = localStorage.getItem("token");
+    let role = localStorage.getItem("role");
+
+    if (role === "admin") {
+      setIsAdmin(true);
+      console.log("admin");
+    }
+    if (token && token !== "undefined") {
+      meAPI(token).then((res) => {
+        setloggedIn(true);
+      });
+    } else {
+      setUser(null);
+    }
   };
-  const neadmin =() =>{
-    setIsAdmin(false);
-  }
-  const login = () => {
-    setloggedIn(true);
+
+  const login = (props) => {
+    let token = localStorage.getItem("token");
+    if (token && token !== "undefined") {
+      setloggedIn(true);
+    } else {
+      console.log("not logged in");
+    }
+    if (localStorage.getItem("role") === "admin") {
+      setIsAdmin(true);
+      console.log("logged");
+    }
   };
   const logout = () => {
     setloggedIn(false);
-    setIsAdmin(false)
+    setIsAdmin(false);
+    localStorage.setItem("token", "");
+    localStorage.setItem("role", "");
   };
-
   return (
-    <Router>
+    <Router key={paths} me={me}>
       {loggedIn ? (
         <div>
           {isAdmin ? (
             <Switch>
-              <AdminLayout logout={logout}>
+              <AdminLayout logout={logout} me={me} user={user}>
                 {AdminRouters.map(({ path, Component, exact }) => (
-                  <Route exact={exact} path={path}>
-                    <Component login={login} admin={admin} />
+                  <Route key={path} exact={exact} path={path}>
+                    {paths.login || paths.registrater ? (
+                      <Component me={props.me} />
+                    ) : (
+                      <Component />
+                    )}
                   </Route>
                 ))}
+
                 <Redirect to={paths.home} />
               </AdminLayout>
             </Switch>
           ) : (
             <Switch>
-              <AppLayout logout={logout}>
+              <AppLayout logout={logout} me={me} user={user}>
                 {AppRouters.map(({ path, Component, exact }) => (
                   <Route exact={exact} path={path}>
-                    <Component login={login} neadmin={neadmin} />
+                    <Component login={login} />
                   </Route>
                 ))}
                 <Redirect to={paths.home} />
@@ -166,13 +229,12 @@ const RootRouter = (props) => {
       ) : (
         <Switch>
           <Redirect from={paths.home} to={paths.login} exact />
-          <LoginLayout login={login}>
+          <LoginLayout>
             {authRouters.map(({ path, Component, exact }) => (
               <Route exact={exact} path={path}>
-                <Component login={login} admin={admin} />
+                <Component login={login} />
               </Route>
             ))}
-
             <Redirect to={paths.login} />
           </LoginLayout>
         </Switch>
@@ -182,4 +244,3 @@ const RootRouter = (props) => {
 };
 
 export default RootRouter;
-

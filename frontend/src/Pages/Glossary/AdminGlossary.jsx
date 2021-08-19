@@ -1,42 +1,66 @@
 import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardImg,
-  Button,
-  CardTitle,
-  CardText,
-  Row,
-  Col,
-} from "reactstrap";
-import { getData, Delete } from "../../api/api";
+import { Row, Col } from "reactstrap";
+import { Delete, getPost } from "../../api/api";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { Container } from "@material-ui/core";
 
-const AdminGlossary = () => {
-  
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+    marginBottom: 15,
+    align: "center",
+  },
+  media: {
+    height: 140,
+  },
+  fone: {
+    backgroundImage: "url(https://source.unsplash.com/random/)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    maxWidth: "auto",
+  },
+}));
+
+const Glossary = () => {
   const [data, setData] = useState([]);
-  const [lastDeleted, setLastDeleted] = useState("")
+  const [lastDeleted, setLastDeleted] = useState("");
+  const classes = useStyles();
 
   useEffect(() => {
-    getData().then((res) => {
+    getPost().then((res) => {
       setData(res.data);
     });
   }, []);
 
-
   useEffect(() => {
-    getData().then((res) => {
+    getPost().then((res) => {
       setData(res.data);
     });
   }, [lastDeleted]);
-  
+
   const deleteItem = (id) => {
     Delete(id).then((response) => {
-      console.log(response)
-      setLastDeleted(response.data)
-    })
-  }
-  
+      console.log(response);
+      setLastDeleted(response.data);
+    });
+  };
+
   return (
-    <div>
+    <div className={classes.fone}>
       <Row
         lg={{ span: 6, offset: 3 }}
         md={{ span: 8, offset: 2 }}
@@ -45,28 +69,44 @@ const AdminGlossary = () => {
         {data.map((post) => {
           return (
             <Col sm="6">
-              <Card
-                // postId={postId}
-                body
-                style={{ width: "400px", height: "400px" }}
-              >
-                <CardTitle tag="h5">{post.name}</CardTitle>
-                <CardImg
-                  top
-                  width="100%"
-                  src={post.file}
-                  style={{ width: "128px" }}
-                  alt="Card image cap"
-                />
-                <CardText>{post.description}</CardText>
-                <Button type="button" className="btn btn-dark btn-lg btn-block">
-                  More
-                </Button>
-                <Button type="submit" onClick={(e) => deleteItem(post._id)} className="btn btn-dark btn-lg btn-block">
-                  Delete
-                </Button>
-    
-              </Card>
+              <Container fixed className={classes.container}>
+                <Card className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image={post.file}
+                      alt="Card image cap"
+                      id="1"
+                    />
+                    <CardContent id="2">
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {post.name}
+                      </Typography>
+                      <Typography
+                        id="3"
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {post.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      color="primary"
+                      type="submit"
+                      onClick={(e) => deleteItem(post._id)}
+                    >
+                      Delete
+                    </Button>
+                    <Nav.Link as={Link} to={`/oneLeisure/${post._id}`}>
+                      More
+                    </Nav.Link>
+                  </CardActions>
+                </Card>
+              </Container>
             </Col>
           );
         })}
@@ -75,5 +115,4 @@ const AdminGlossary = () => {
   );
 };
 
-
-export default AdminGlossary;
+export default Glossary;

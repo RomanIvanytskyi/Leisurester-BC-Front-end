@@ -1,10 +1,12 @@
-import RandomButton from "../../Components/Button/RandomButton";
-import Carouselka from "../../Components/Carousel/Carousel"
+import Carouselka from "../../Components/Carousel/Carousel";
+import Proposition from "../UserProposition/UserProposition";
 
 const Home = () => {
-  return <div>
-
-    <Carouselka />
-  </div>
-}
-export default Home;  
+  return (
+    <div>
+      <Carouselka />
+      <Proposition />
+    </div>
+  );
+};
+export default Home;

@@ -13,12 +13,16 @@ const Login = (props) => {
     },
     onSubmit: (values) => {
       login(values).then((res) => {
-        console.log(res);
-        if(res.data.userId) {
-          props.login()
+        console.log(res.data.token);
+        localStorage.setItem("token", res.data.token, "role", res.data.role);
+        localStorage.setItem("role", res.data.role);
+        if (res.data.token) {
+          props.login();
+          console.log("done");
         }
-        if(res.data.userId === "60e9e82ff1d2b1945a107d81") {
-          props.admin();
+        if (res.data.role === "admin") {
+          console.log(res.data.role);
+          props.login();
         }
       });
     },
@@ -47,9 +51,9 @@ const Login = (props) => {
             </div>
 
             <div className="form-group">
-              <label>Password</label>
+              <label>Passwword</label>
               <input
-                name="password"
+                name="passord"
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 type="password"
@@ -71,7 +75,9 @@ const Login = (props) => {
               </div>
             </div>
 
-            <Button className="login-btn" type="submit">Login</Button>
+            <Button className="login-btn" type="submit">
+              Login
+            </Button>
             <p className="forgot-password text-right">
               <NavLink as={Link} to={paths.register}>
                 Not registred?

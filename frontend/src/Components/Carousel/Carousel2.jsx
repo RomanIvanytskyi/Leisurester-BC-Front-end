@@ -5,7 +5,6 @@ import { Carousel, Nav } from "react-bootstrap";
 import { Button } from "reactstrap";
 import classes from "./carousel.module.css";
 import { Link } from "react-router-dom";
-import Container from "@material-ui/core/Container";
 
 const Carouselka = () => {
   //eslint-disable-next-line
@@ -15,6 +14,7 @@ const Carouselka = () => {
   useEffect(() => {
     getRandom().then((response) => {
       response.data.forEach((item) => {});
+      console.log(response.data.data);
       setRandom(
         response.data.map((item) => {
           return {
@@ -37,7 +37,7 @@ const Carouselka = () => {
   useEffect(() => {
     getRandom().then((response) => {
       getRandom(response.data);
-
+      console.log(response.data);
       setRandom(
         response.data.map((item) => {
           return {
@@ -62,38 +62,37 @@ const Carouselka = () => {
 
   return (
     <div>
-      <Container fixed>
-        <Carousel className={classes.carousel} variant="dark">
-          {random.map((q) => {
-            return (
-              <Carousel.Item className={classes.carouselitem} key={q.id}>
-                <img alt="" className="d-block w-100" src={q.file}></img>
-                <Carousel.Caption>
-                  <div>
-                    <div className={classes.case}>
-                      <Button
-                        className={classes.Random}
-                        type="button"
-                        onClick={(e) => restartpage()}
-                      >
-                        Random
-                      </Button>
-                    </div>
-                    <h3>{q.name}</h3>
-                    <div>{q.type}</div>
-                    <div>
-                      {" "}
-                      <Nav.Link as={Link} to={`/oneLeisure/${q.id}`}>
-                        More
-                      </Nav.Link>
-                    </div>
+      <Carousel className={classes.carousel} variant="dark">
+        {random.map((q) => {
+          console.log(q.id);
+          return (
+            <Carousel.Item className={classes.carouselitem} key={q.id}>
+              <img alt="" className="d-block w-100" src={q.file}></img>
+              <Carousel.Caption>
+                <div>
+                  <div className={classes.case}>
+                    <Button
+                      className={classes.Random}
+                      type="button"
+                      onClick={(e) => restartpage(console.log("done"))}
+                    >
+                      Random
+                    </Button>
                   </div>
-                </Carousel.Caption>
-              </Carousel.Item>
-            );
-          })}
-        </Carousel>
-      </Container>
+                  <h3>{q.name}</h3>
+                  <div>{q.type}</div>
+                  <div>
+                    {" "}
+                    <Nav.Link as={Link} to={`/oneLeisure/${q.id}`}>
+                      More
+                    </Nav.Link>
+                  </div>
+                </div>
+              </Carousel.Caption>
+            </Carousel.Item>
+          );
+        })}
+      </Carousel>
     </div>
   );
 };

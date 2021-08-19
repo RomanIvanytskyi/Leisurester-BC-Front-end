@@ -20,21 +20,15 @@ const AdminLayout = ({ children, logout }) => {
           </Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link as={Link} to={paths.profile} className={classes.NavLinks}>
-            <p className={classes.NavLinks}> Profile</p>
+              <p className={classes.NavLinks}> Profile</p>
             </Nav.Link>
             <Nav.Link as={Link} to={paths.adminglossary}>
               <p className={classes.NavLinks}>Library</p>
             </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to={paths.newLeisure}
-            >
-               <p className={classes.NavLinks}> NewLeisure</p>
+            <Nav.Link as={Link} to={paths.newLeisure}>
+              <p className={classes.NavLinks}> NewLeisure</p>
             </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to={paths.adminproposition}
-            >
+            <Nav.Link as={Link} to={paths.adminproposition}>
               <p className={classes.NavLinks}> Propositions</p>
             </Nav.Link>
           </Nav>

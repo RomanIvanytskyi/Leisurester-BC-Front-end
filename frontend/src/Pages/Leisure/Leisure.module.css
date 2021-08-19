@@ -1,0 +1,34 @@
+.card {
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+  background-color: #fff;
+}
+.cardImg {
+  width: 100%;
+  height: 550px;
+  object-fit: cover;
+  object-position: center;
+  background: #c7ecee;
+}
+
+.carddetail .cardtitle {
+  font-size: 16pt;
+  margin-bottom: 20px;
+}
+
+.carddetail .cardImg {
+  height: 450px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 992px) {
+  .carddetail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.5rem;
+  }
+
+  .carddetail .cardImg {
+    height: auto;
+  }
+}
