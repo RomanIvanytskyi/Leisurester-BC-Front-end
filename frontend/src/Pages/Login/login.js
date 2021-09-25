@@ -52,11 +52,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Login(props) {
   const classes = useStyles();
   const [data, setData] = useState([]);
-  useEffect(() => {
-    getUsers().then((res) => {
-      setData(res.data);
-    });
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -65,15 +60,9 @@ export default function Login(props) {
     },
     onSubmit: (values) => {
       login({ ...values, id: data._id }).then((res) => {
-        console.log(res.data.token);
-        localStorage.setItem("token", res.data.token, "role", res.data.role);
-        localStorage.setItem("role", res.data.role);
+        props.me(res.data.token)
+        localStorage.setItem("token", res.data.token);
         if (res.data.token) {
-          props.login();
-
-          console.log("done");
-        }
-        if (res.data.role === "admin") {
           props.login();
         }
       });

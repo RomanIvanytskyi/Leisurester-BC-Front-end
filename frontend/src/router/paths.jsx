@@ -12,6 +12,7 @@ const paths = {
   adminproposition: "/adminproposition",
   oneLeisure: "/oneLeisure",
   LeisureEdit: "/editPost",
+  
 };
 
 export default paths;

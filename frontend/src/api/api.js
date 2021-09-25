@@ -27,13 +27,9 @@ export const register = (data) => {
 };
 
 export const login = (data) => {
-  console.log("sdasdasd");
   return axios.post("http://localhost:3000/auth/login", {
     email: data.email,
     password: data.password,
-    userId: data._id,
-    type: data.type,
-    role: data.role,
   });
 };
 
@@ -96,4 +92,10 @@ export const getPage = (id) => {
 };
 export const getUsers = (id) => {
   return axios.get("http://localhost:3000/auth/users");
+};
+
+export const postSearch = (name) => {
+  return axios.post("http://localhost:3000/leisure/postSearch", {
+    name,
+  });
 };

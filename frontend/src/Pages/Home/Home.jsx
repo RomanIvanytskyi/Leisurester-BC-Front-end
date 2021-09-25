@@ -1,11 +1,15 @@
 import Carouselka from "../../Components/Carousel/Carousel";
-import Proposition from "../UserProposition/UserProposition";
+import "./Home.css";
 
 const Home = () => {
   return (
-    <div>
-      <Carouselka />
-      <Proposition />
+    <div class="container">
+      <div class="Carousel">
+        {" "}
+        <Carouselka />
+      </div>
+      <div class="Info">Info</div>
+      <div class="Footer"></div>
     </div>
   );
 };

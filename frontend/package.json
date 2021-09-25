@@ -13,7 +13,7 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.1.1",
     "formic": "0.0.10",
     "formik": "^2.2.8",
     "framer-motion": "^4.1.16",

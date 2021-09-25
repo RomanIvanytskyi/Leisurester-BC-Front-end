@@ -5,9 +5,9 @@ import { getPage } from "../../api/api";
 import { Card, CardImg, CardTitle, CardText } from "reactstrap";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import classes from "./Leisure.module.css";
-const Leisure = (props) => {
-  const location = useLocation();
+  import classes from "./Leisure.module.css";
+  const Leisure = (props) => {
+    const location = useLocation();
   const [data, setData] = useState(null);
 
   useEffect(() => {

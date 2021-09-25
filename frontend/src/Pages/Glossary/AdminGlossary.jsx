@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { Container } from "@material-ui/core";
+import classes from "./Library.module.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,14 +83,7 @@ const Glossary = () => {
                       <Typography gutterBottom variant="h5" component="h2">
                         {post.name}
                       </Typography>
-                      <Typography
-                        id="3"
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        {post.description}
-                      </Typography>
+                   
                     </CardContent>
                   </CardActionArea>
                   <CardActions>

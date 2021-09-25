@@ -67,18 +67,11 @@ const Carouselka = () => {
           {random.map((q) => {
             return (
               <Carousel.Item className={classes.carouselitem} key={q.id}>
+                <div className={classes.image}>
                 <img alt="" className="d-block w-100" src={q.file}></img>
+               
                 <Carousel.Caption>
                   <div>
-                    <div className={classes.case}>
-                      <Button
-                        className={classes.Random}
-                        type="button"
-                        onClick={(e) => restartpage()}
-                      >
-                        Random
-                      </Button>
-                    </div>
                     <h3>{q.name}</h3>
                     <div>{q.type}</div>
                     <div>
@@ -86,13 +79,24 @@ const Carouselka = () => {
                       <Nav.Link as={Link} to={`/oneLeisure/${q.id}`}>
                         More
                       </Nav.Link>
+                     
                     </div>
                   </div>
                 </Carousel.Caption>
+                </div>
               </Carousel.Item>
             );
           })}
         </Carousel>
+        <div className={classes.case}>
+          <Button
+            className={classes.Random}
+            type="button"
+            onClick={(e) => restartpage()}
+          >
+            Random
+          </Button>
+        </div>
       </Container>
     </div>
   );

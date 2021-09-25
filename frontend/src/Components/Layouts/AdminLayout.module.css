@@ -9,5 +9,16 @@
 }
 .NavLinks:hover {
     color: rgb(85, 34, 180);
-   
-  }
+}
+
+.formEl {
+    display: inline;
+}
+
+.searchIcon {
+    display: inline;
+}
+
+.search {
+    padding: 15px;
+}

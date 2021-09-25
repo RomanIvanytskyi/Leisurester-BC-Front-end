@@ -1,0 +1,30 @@
+.container {
+  display: grid;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "Carousel"
+    "Info"
+    "Footer";
+}
+
+.Carousel {
+    margin-top: 20px;
+  margin-left: 140px;
+  grid-area: Carousel;
+  border-width: 2px;
+  overflow: hodden;
+  width: 1000px;
+  height: 900px;
+  border-color: rgb(107, 49, 49);
+  position: relative;
+  border-radius: 15%;
+}
+
+.Info {
+  grid-area: Info;
+}
+
+.Footer {
+  grid-area: Footer;
+}
